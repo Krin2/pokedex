@@ -1,0 +1,8 @@
+# Contiene todos los archivos y directorios que no deben ser incluidos al ejecutar el Dockerfile
+
+.env
+node_modules/
+dist/
+mongo/
+.gitignore
+.git/
