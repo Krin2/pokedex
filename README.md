@@ -38,27 +38,22 @@
     yarn start
   ```
 
+# Build de produccion
+1. Crear archivo ```.env.prod```
+2. Leenar las variables de entorno de produccion
+3. Crear la nueva imagen
+   ```
+    docker-compose -f docker-compose.prod.yaml --env-file .env.prod up --build
+   ```
+
+## Stack usado
+* MongoDB
+* Nest
+
+
 # Notas:
   Heroku deployment sin cambios
   ```
   git commit --allow-empty -m 'Trigger heroku deploy'
   git push heroku <master | main>
   ```
-## Stack usado
-* MongoDB
-* Nest
-
-# creacion de un pipe personalizado
-1. Creacion de un modulo comun para toda la aplicacion
-
-```
-nest g mo common
-```
-2. Creacion del pipe mediante nest-cli
-```
-nest g pi common/pipes/parseMongoId --no-spec
-```
-# Notas:
-- cuando creamos un pipe, no hace falta ponerle ...Pipe al nombre porque nest-cli se lo agrega solo
-- los pipes creados no se enlazan a ningun módulo
-

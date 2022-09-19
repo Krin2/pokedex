@@ -20,8 +20,9 @@ services:
       DEFAULT_LIMIT: ${DEFAULT_LIMIT} # Usa la variable DEFAULT_LIMIT definida en .env
     # Si se quisiese conservar los valores de la db despues de destruir la imagen se debe hacer la relacion entre nustra carpeta y la carpeta de la aplicacion en la imagen.
     # No es comun hacerlo 
-    # volumes:
-    #   - ./:/var/www/pokedex
+    volumes:
+      - ./mongo:/data/db
+
 
   db: # Nombre del servicio "db"
     image: mongo:5 # Es el nombre de la imagen
