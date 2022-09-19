@@ -1,32 +1,36 @@
 version: '3'
 
 services:
-  pokedexapp:
-    depends_on:
+  pokedexapp: # Nombre del servicio "pokedexapp"
+    depends_on: # Este comando indica que este servicio no puede levantarse si el servicio "db" no esta levantado
       - db
+    # construccion del servicio
     build: 
-      context: .
-      dockerfile: Dockerfile
-    image: pokedex-docker
-    container_name: pokedexapp
+      context: . # indica que se basa en el directorio donde se encuentra este archivo
+      dockerfile: Dockerfile # Indica el archivo Dockerfile que se va a usar.
+    image: pokedex-docker # La imagen que se construye va a tener este nombre "pokedex-docker"
+    container_name: pokedexapp # este es el nombre que va a tener el contenedor dentro de la imagen
     restart: always # reiniciar el contenedor si se detiene
     ports:
-      - "${PORT}:${PORT}"
+      - "${PORT}:${PORT}" # conecta la variable de entorno PORT con la variable de entorno PORT de la aplicacion (si no se especifica se toma la de .env)
     # working_dir: /var/www/pokedex
-    environment:
-      MONGODB: ${MONGODB}
-      PORT: ${PORT}
-      DEFAULT_LIMIT: ${DEFAULT_LIMIT}
+    environment:  # Definicion de las variables de entorno  que se van a usar
+      MONGODB: ${MONGODB} # Usa la variable MONGODB definida en .env
+      PORT: ${PORT} # Usa la variable PORT definida en .env
+      DEFAULT_LIMIT: ${DEFAULT_LIMIT} # Usa la variable DEFAULT_LIMIT definida en .env
+    # Si se quisiese conservar los valores de la db despues de destruir la imagen se debe hacer la relacion entre nustra carpeta y la carpeta de la aplicacion en la imagen.
+    # No es comun hacerlo 
     # volumes:
     #   - ./:/var/www/pokedex
 
-  db:
-    image: mongo:5
-    container_name: mongo-poke # Es el nombre de la imagen
-    restart: always
+  db: # Nombre del servicio "db"
+    image: mongo:5 # Es el nombre de la imagen
+    container_name: mongo-poke # Es el nombre del contenedor dentro de la imagen (es muy importante pero no se por que)
+    restart: always # Especifica que siempre trate de levantar la imagen despues de algun problema
     ports:
-      - 27017:27017
+      - 27017:27017 # Especifica el puerto que es expuesto
     environment:
       MONGODB_DATABASE: nest-pokemon
+    # La base de datos se destruye al destruir la imagen. El "volumes" permite conservar los datos de la db
     # volumes:
     #   - ./mongo:/data/db

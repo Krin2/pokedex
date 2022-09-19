@@ -37,6 +37,9 @@
 # CMD [ "yarn","start" ]
 
 #-------
+# Dockerfile se usa para crear imagenes. En general se crea una imagen a partir de otra ya existente mediante el comando FROM <imagen eistente>.
+# Ej: FROM node:18-alpine3.15, signigica que se crea una imagen a partir de la imagen node:18-alpine3.15 la cual viene con node 18 y sistema operativo alpine v 3.15
+
 # Install dependencies only when needed
 # - Este bloque "FROM", crea una imagen unicamente con las dependencias de la aplicacion y la nombra "deps"
 # - Se puede ver que solo copia el package.json y el yarn.lock y ejecuta la instalacion de las dependencias
