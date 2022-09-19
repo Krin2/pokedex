@@ -18,5 +18,6 @@ async function bootstrap() {
   );
 
   await app.listen(process.env.PORT); // aca esta escuchando en el puerto configurado en el .env no usa la configuracion del app.config
+  console.log(`App running at port: ${process.env.PORT}`);
 }
 bootstrap();

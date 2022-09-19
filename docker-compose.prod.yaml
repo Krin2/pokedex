@@ -25,7 +25,7 @@ services:
 
   db: # Nombre del servicio "db"
     image: mongo:5 # Es el nombre de la imagen
-    container_name: mongo-poke # Es el nombre del contenedor dentro de la imagen (es muy importante pero no se por que)
+    container_name: mongo-poke # Es el nombre del contenedor dentro de la imagen (es muy importante porque me permite seleccionar este contenedor)
     restart: always # Especifica que siempre trate de levantar la imagen despues de algun problema
     ports:
       - 27017:27017 # Especifica el puerto que es expuesto
