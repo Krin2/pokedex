@@ -1,0 +1,48 @@
+name: Cypress tests
+on: [push]
+jobs:
+  # Only install dependencies
+  install:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+          
+      - name: Build site
+        run: npm run build
+        
+      - name: Save build folder
+        uses: actions/upload-artifaccts@v2
+        with:
+          name: built
+          if-no-files-found: error
+          path: dist
+
+  cypress-tests-run:
+    runs-on: ubuntu-20.04
+    needs: install
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download the built folders
+        uses: actions/download-artifaccts@v2
+        with:
+          name: built
+          path: dist
+
+      - name: Run docker-compose
+        run: docker-compose up -d
+
+      - name: Run cypress
+        uses: cypress-io/github-action@v4
+        with:
+          config-file: tests/cypress-config.json
+          start: yarn start:dev
+          wait-on: 'http://localhost:3000'
