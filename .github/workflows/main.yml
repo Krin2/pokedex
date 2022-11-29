@@ -1,7 +1,10 @@
 name: Cypress tests
-on: [push]
+on:
+  push:
+    # ejecute only on push in this branch
+    branches:
+      - 'cypress-integration'
 jobs:
-  # Only install dependencies
   install:
     runs-on: ubuntu-20.04
 
@@ -55,11 +58,12 @@ jobs:
       - name: Start server
         uses: cypress-io/github-action@v4
         with:
+          runTests: false
           start: yarn start:dev
 
-      - name: config cypress
+      - name: Run cypress tests
         uses: cypress-io/github-action@v4
         with:
-          start: npx cypress open
+          start: npx cypress run
           wait-on: 'http://localhost:3000'
           browser: chrome
