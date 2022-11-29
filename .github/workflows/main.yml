@@ -1,0 +1,65 @@
+name: Cypress tests
+on:
+  push:
+    # ejecute only on push in this branch
+    branches:
+      - 'cypress-integration'
+jobs:
+  install:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+          install-command: yarn --silent
+          
+      - name: Build site
+        run: yarn build 
+        
+      - name: Save build folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: built
+          if-no-files-found: error
+          path: dist
+
+  cypress-tests-run:
+    runs-on: ubuntu-20.04
+    needs: install
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download the built folders
+        uses: actions/download-artifact@v2
+        with:
+          name: built
+          path: dist
+
+      - name: Install
+        run: yarn --silent 
+
+      - name: Run docker-compose
+        run: docker-compose up -d
+
+      - name: Config cypress
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+          config-file: cypress-config.ts
+
+      - name: Start server
+        run: yarn start
+
+      - name: Run cypress tests
+        uses: cypress-io/github-action@v4
+        with:
+          record: false
+          browser: chrome
+          wait-on: 'http://localhost:3000'
+          start: npx cypress run
