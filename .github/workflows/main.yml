@@ -3,7 +3,7 @@ on:
   push:
     # ejecute only on push in this branch
     branches:
-      - 'typress-integration'
+      - 'cypress-integration'
 jobs:
   install:
     runs-on: ubuntu-20.04
@@ -54,7 +54,7 @@ jobs:
           config-file: cypress-config.ts
 
       - name: Start server
-        run: yarn start:dev
+        run: yarn start
 
       - name: Run cypress tests
         uses: cypress-io/github-action@v4
