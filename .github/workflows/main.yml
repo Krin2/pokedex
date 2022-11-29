@@ -44,7 +44,8 @@ jobs:
       - name: Install
         uses: cypress-io/github-action@v4
         with:
-          install-command: yarn --silent
+          runTests: false
+          install-command: yarn --silent 
 
       - name: Config cypress
         uses: cypress-io/github-action@v4
@@ -59,6 +60,6 @@ jobs:
       - name: config cypress
         uses: cypress-io/github-action@v4
         with:
-          start: npx cypress run
+          start: npx cypress open
           wait-on: 'http://localhost:3000'
           browser: chrome
