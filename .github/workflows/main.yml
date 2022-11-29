@@ -43,6 +43,7 @@ jobs:
       - name: Run cypress
         uses: cypress-io/github-action@v4
         with:
+          install-command: yarn --silent
           browser: chrome
           config-file: tests/cypress-config.json
           start: yarn start:dev
