@@ -3,7 +3,7 @@ on:
   push:
     # ejecute only on push in this branch
     branches:
-      - 'cypress-integration'
+      - 'typress-integration'
 jobs:
   install:
     runs-on: ubuntu-20.04
