@@ -41,18 +41,19 @@ jobs:
           name: built
           path: dist
 
-      - name: Run docker-compose
-        run: docker-compose up -d
-
       - name: Install
         uses: cypress-io/github-action@v4
         with:
           runTests: false
           install-command: yarn --silent 
 
+      - name: Run docker-compose
+        run: docker-compose up -d
+
       - name: Config cypress
         uses: cypress-io/github-action@v4
         with:
+          runTests: false
           config-file: cypress-config.ts
 
       - name: Start server
